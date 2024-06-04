@@ -33,7 +33,6 @@ void lldi(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
-    reset_dir(list);
     lldi_moove(champ, list, bin);
     return;
 }

@@ -41,7 +41,7 @@ static void execute_st(champ_t *champ, corewar_t *game, param_t *list)
         champ->reg[list[1].value - 1] = value;
     else {
         index = (champ->pc + list[1].value) % IDX_MOD;
-        write_int_to_memory(value, game, index - 1);
+        write_int_to_memory(value, game, index);
     }
     return;
 }

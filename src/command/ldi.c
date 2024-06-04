@@ -19,11 +19,22 @@ static void ldi_moove(champ_t *champ, param_t *list, char *bin)
     for (int i = 0; list[i].type != 0; i++) {
         add += list[i].size;
     }
-    my_printf("ldi %s\n", champ->name);
     add_pc(champ, add + 2);
     free(list);
     free(bin);
     return;
+}
+
+static void execute_ldi(champ_t *champ, corewar_t *game, param_t *list)
+{
+    int first = value_of_param(champ, game, list[0]);
+    int second = value_of_param(champ, game, list[1]);
+    int reg = list[2].value;
+    int pc = first + second;
+    unsigned int value = read_int_from_memory(game, pc);
+
+    champ->reg[reg - 1] = value;
+    champ->carry = value == 0 ? 1 : 0;
 }
 
 void ldi(champ_t *champ, corewar_t *game)
@@ -32,8 +43,9 @@ void ldi(champ_t *champ, corewar_t *game)
     char *bin = dec_to_octet(game->board[pc], "01", 8);
     param_t *list;
 
-    list = read_param(3, bin);
-    reset_dir(list);
+    list = read_param_except(3, bin);
+    fill_value_except(champ, game, list, 3);
+    execute_ldi(champ, game, list);
     ldi_moove(champ, list, bin);
     return;
 }

@@ -27,9 +27,10 @@ static void add_moove(champ_t *champ, param_t *list, char *bin)
 
 static void execute_add(champ_t *champ, param_t *list)
 {
-    unsigned int value = champ->reg[list[0].value] + champ->reg[list[1].value];
+    unsigned int value = champ->reg[list[0].value - 1] +
+    champ->reg[list[1].value - 1];
 
-    champ->reg[list[2].value] = value;
+    champ->reg[list[2].value - 1] = value;
     champ->carry = value == 0 ? 1 : 0;
 }
 
