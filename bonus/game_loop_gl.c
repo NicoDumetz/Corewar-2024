@@ -23,15 +23,21 @@ void initialize_scene()
 
 void render_scene(float camera_angle, corewar_t *game)
 {
-    float camX = sin(camera_angle * M_PI / 180.0f) * 100.0f; // radius du tour camera
-    float camZ = cos(camera_angle * M_PI / 180.0f) * 100.0f;
+    float targetX = (78 - 1) * 2.0f / 2.0f;
+    float targetY = 0.0f;
+    float targetZ = (78 - 1) * 2.0f / 2.0f;
+    float radius = 100.0f;
+    float camX = targetX + sin(camera_angle * M_PI / 180.0f) * radius;
+    float camY = 50.0f;
+    float camZ = targetZ + cos(camera_angle * M_PI / 180.0f) * radius;
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    gluLookAt(50 + camX, 50.0f, 50 + camZ,    // valeur camera
-          100, 0.0f, 100,
-          0.0f, 1.0f, 0.0f);
+
+    gluLookAt(camX, camY, camZ,
+              targetX, targetY, targetZ,
+              0.0f, 1.0f, 0.0f);
     manage_cube(game);
 }
 
