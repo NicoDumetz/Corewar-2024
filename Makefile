@@ -32,6 +32,7 @@ SRC = main.c \
 	  src/command/aff.c \
 	  src/nbr_live.c \
 	  src/dec_to_octet.c \
+	  src/write_in_mem.c \
 
 
 OBJ = $(SRC:.c=.o)

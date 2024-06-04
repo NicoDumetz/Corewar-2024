@@ -29,13 +29,13 @@ static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
 {
     int reg = list[1].value;
     int index = 0;
-    unsigned int value;
+    int value;
 
-    if (list[0].type == T_DIR)
+    if (list[0].type == T_IND) {
         index = (champ->pc + list[0].value) % IDX_MOD;
-    else
-        index = list[0].type;
-    value = game->board[index];
+        value = read_int_from_memory(game, index);
+    } else
+        value = list[0].value;
     champ->reg[reg - 1] = value;
     champ->carry = value == 0 ? 1 : 0;
 }

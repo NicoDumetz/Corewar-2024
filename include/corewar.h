@@ -96,4 +96,6 @@ void manage_cycle_to_die(corewar_t *game);
 int pick_direct(int pc, corewar_t *game);
 void fill_value(champ_t *champ, corewar_t *game, param_t *list, int len);
 int value_of_param(champ_t *champ, corewar_t *game, param_t list);
+void write_int_to_memory(int value, corewar_t *game, int address);
+int read_int_from_memory(corewar_t *game, int address);
 #endif

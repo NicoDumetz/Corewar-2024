@@ -59,7 +59,7 @@ int pick_direct(int pc, corewar_t *game)
 static int pick_indirect(int pc, corewar_t *game)
 {
     union intconverter converter;
-    short address = pc + 1;
+    int address = pc + 1;
 
     converter.bytes[0] = game->board[(address + 1) % MEM_SIZE];
     converter.bytes[1] = game->board[address % MEM_SIZE];
