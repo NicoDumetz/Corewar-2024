@@ -42,6 +42,7 @@ void init_memory(corewar_t *game)
     game->cycle_delta = CYCLE_DELTA;
     game->cycle_die = CYCLE_TO_DIE;
     game->len_hero = len_hero(game);
+    game->nbr_live = 0;
     for (int i = 0; i < MEM_SIZE; i++)
         game->board[i] = 0;
     div = MEM_SIZE / game->len_hero + 1;

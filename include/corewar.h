@@ -56,6 +56,7 @@ typedef struct corewar_s {
     int len_hero;
     int cycle_die;
     int cycle_delta;
+    int nbr_live;
 } corewar_t;
 typedef struct command_s {
     char *name;
@@ -91,4 +92,8 @@ void lld(champ_t *champ, corewar_t *game);
 void lldi(champ_t *champ, corewar_t *game);
 void lfork_cor(champ_t *champ, corewar_t *game);
 void aff(champ_t *champ, corewar_t *game);
+void manage_cycle_to_die(corewar_t *game);
+int pick_direct(int pc, corewar_t *game);
+int pick_indirect(int pc, corewar_t *game);
+void fill_value(champ_t *champ, corewar_t *game, param_t *list, int len);
 #endif

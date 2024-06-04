@@ -63,6 +63,7 @@ int game_loop(corewar_t *game)
         for (; champ; champ = champ->next) {
             execute_champion(champ, game);
         }
+        manage_cycle_to_die(game);
     }
     display_winner(game);
     return 0;

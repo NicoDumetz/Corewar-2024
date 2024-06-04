@@ -30,6 +30,8 @@ SRC = main.c \
 	  src/command/lldi.c \
 	  src/command/lfork.c \
 	  src/command/aff.c \
+	  src/nbr_live.c \
+	  src/dec_to_octet.c \
 
 
 OBJ = $(SRC:.c=.o)

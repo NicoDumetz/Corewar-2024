@@ -19,11 +19,25 @@ static void ld_moove(champ_t *champ, param_t *list, char *bin)
     for (int i = 0; list[i].type != 0; i++) {
         add += list[i].size;
     }
-    my_printf("ld %s\n", champ->name);
     add_pc(champ, add + 2);
     free(list);
     free(bin);
     return;
+}
+
+static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
+{
+    int reg = list[1].value;
+    int index = 0;
+    int value;
+
+    if (list[0].type == T_DIR)
+        index = (champ->pc + list[0].value) % IDX_MOD;
+    else
+        index = list[0].type;
+    value = game->board[index];
+    champ->reg[reg - 1] = value;
+    champ->carry = value == 0 ? 1 : 0;
 }
 
 void ld_cor(champ_t *champ, corewar_t *game)
@@ -33,6 +47,8 @@ void ld_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
+    fill_value(champ, game, list, 2);
+    execute_ld(champ, game, list);
     ld_moove(champ, list, bin);
     return;
 }
