@@ -1,11 +1,11 @@
 /*
 ** EPITECH PROJECT, 2024
-** ufhze
+** draw_rect
 ** File description:
-** oufze
+** draw_rect
 */
-#include "bonus.h"
 
+#include "include/bonus.h"
 
 void draw_rect(float x, float y, int right)
 {
@@ -37,7 +37,7 @@ void manage_profil(void)
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0, windowWidth, 0, windowHeight); // Utilise gluOrtho2D pour définir la projection
+    gluOrtho2D(0, windowWidth, 0, windowHeight);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();

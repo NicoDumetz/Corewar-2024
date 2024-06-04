@@ -31,13 +31,30 @@ static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
     int index = 0;
     int value;
 
+    if (reg - 1 > REG_NUMBER) {
+        champ->carry = 0;
+        return;
+    }
     if (list[0].type == T_IND) {
-        index = (champ->pc + list[0].value) % IDX_MOD;
+        index = (champ->pc + ((short)list[0].value % IDX_MOD));
         value = read_int_from_memory(game, index);
     } else
         value = list[0].value;
     champ->reg[reg - 1] = value;
     champ->carry = value == 0 ? 1 : 0;
+}
+
+int check_var_ld(param_t *list)
+{
+    if (list[0].type == T_REG) {
+        free(list);
+        return 1;
+    }
+    if (list[1].type != T_REG) {
+        free(list);
+        return 1;
+    }
+    return 0;
 }
 
 void ld_cor(champ_t *champ, corewar_t *game)
@@ -47,8 +64,9 @@ void ld_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
-    if (list == NULL) {
+    if (list == NULL || check_var_ld(list) == 1) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 2);

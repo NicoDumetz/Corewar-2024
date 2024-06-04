@@ -31,8 +31,12 @@ static void execute_lld(champ_t *champ, corewar_t *game, param_t *list)
     int index = 0;
     int value;
 
+    if (reg - 1 > REG_NUMBER) {
+        champ->carry = 0;
+        return;
+    }
     if (list[0].type == T_IND) {
-        index = (champ->pc + list[0].value);
+        index = (champ->pc + (short)list[0].value);
         value = read_int_from_memory(game, index);
     } else
         value = list[0].value;
@@ -47,8 +51,9 @@ void lld(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
-    if (list == NULL) {
+    if (list == NULL || check_var_ld(list) == 1) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 2);

@@ -12,22 +12,25 @@
 #include <sys/stat.h>
 
 
-static void lfork_moove(champ_t *champ, param_t *list, char *bin)
-{
-    my_printf("lfork %s\n", champ->name);
-    add_pc(champ, 3);
-    if (list != NULL)
-        free(list);
-    free(bin);
-    return;
-}
-
 void lfork_cor(champ_t *champ, corewar_t *game)
 {
+    champ_t *new = malloc(sizeof(champ_t));
     int pc = champ->pc + 1;
-    char *bin = dec_to_octet(game->board[pc], "01", 8);
-    param_t *list = NULL;
+    union intconverter converter;
+    short value = 0;
 
-    lfork_moove(champ, list, bin);
+    converter.bytes[0] = game->board[(pc + 1) % MEM_SIZE];
+    converter.bytes[1] = game->board[pc % MEM_SIZE];
+    converter.bytes[2] = 0;
+    converter.bytes[3] = 0;
+    value = converter.value;
+    copy_of_champ(champ, new);
+    new->pc = champ->pc + value;
+    if (new->pc < 0) {
+        new->pc += MEM_SIZE;
+    } else if (new->pc >= MEM_SIZE)
+        new->pc %= MEM_SIZE;
+    insert_champ(new, game);
+    add_pc(champ, 3);
     return;
 }
