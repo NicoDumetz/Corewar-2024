@@ -5,7 +5,9 @@
 ** main
 */
 
-#include "include/bonus.h"
+#include "include/my.h"
+#include "include/corewar.h"
+#include "include/op.h"
 
 
 static void error_callback(int , const char* description)
@@ -19,10 +21,16 @@ static void key_callback(GLFWwindow* window, int key, int , int action, int )
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-int main(void)
+int main(int ac, char **av)
 {
     GLFWwindow* window;
+    corewar_t game;
 
+    if (check_flags(ac, av, &game))
+        return 84;
+    if (init_champ(ac, av, &game) == 84)
+        return 84;
+    init_memory(&game);
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         exit(EXIT_FAILURE);
@@ -34,8 +42,9 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     glfwSetKeyCallback(window, key_callback);
-    game_loop(window);
+    game_loop(&game, window);
     glfwDestroyWindow(window);
     glfwTerminate();
+    destroy_allchamps(&game);
     exit(EXIT_SUCCESS);
 }

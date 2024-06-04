@@ -5,7 +5,9 @@
 ** draw_rect
 */
 
-#include "include/bonus.h"
+#include "include/my.h"
+#include "include/corewar.h"
+#include "include/op.h"
 
 void draw_rect(float x, float y, int right)
 {
