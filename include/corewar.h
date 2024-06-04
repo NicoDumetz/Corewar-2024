@@ -18,6 +18,7 @@
     #include <stdint.h>
     #include <stddef.h>
     #include <wchar.h>
+    #include <stdbool.h>
     #include "my.h"
     #include "op.h"
 
@@ -66,9 +67,13 @@ typedef struct command_s {
     void (*com)(champ_t *, corewar_t *);
 } command_t;
 extern command_t com_tab[];
+int free_tab(char **argv, int return_value);
+int fetch_options(char **argv, unsigned char *i, champ_t *new,
+    corewar_t *game);
 void insert_champ(champ_t *champ, corewar_t *game);
-int check_flags(int argc, char **argv, corewar_t *game);
-int init_champ(int ac, char **av, corewar_t *game);
+bool is_num(char *str);
+int check_dump(char **argv, corewar_t *game);
+int init_champ(char **av, corewar_t *game);
 void display_memory(corewar_t *game);
 void destroy_allchamps(corewar_t *game);
 void init_memory(corewar_t *game);
@@ -106,9 +111,4 @@ void fill_value_except(champ_t *champ, corewar_t *game,
     param_t *list, int len);
 param_t *read_param_except(int len, char *bin);
 void write_short_to_memory(short value, corewar_t *game, int address);
-int check_only_reg(param_t *list);
-int check_reg(param_t *list);
-int check_var_ld(param_t *list);
-void copy_of_champ(champ_t *champ, champ_t *new);
-int fill_types_except(param_t *list, int i, char *bin, int ind);
 #endif

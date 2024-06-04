@@ -5,16 +5,19 @@
 ** bonus
 */
 
-#ifndef BONUS
-    #define BONUS
+#ifndef k
+    #define k
     #include <GLFW/glfw3.h>
     #include <stdlib.h>
     #include <stdio.h>
     #include <math.h>
     #include <GL/gl.h>
     #include <GL/glu.h>
+    #include <GL/glut.h>
+    #include <ft2build.h>
+    #include FT_FREETYPE_H
+
 void manage_profil(void);
-void drawCube(float x, float y, float z, float size);
-void manage_cube(void);
-void game_loop(GLFWwindow* window);
+void manage_img(void);
+void manage_text(void);
 #endif

@@ -57,31 +57,22 @@ void execute_champion(champ_t *champ, corewar_t *game)
     return;
 }
 
-static int in_game(corewar_t *game, int *cycle)
-{
-    champ_t *champ = NULL;
-
-    if (*cycle == game->dump) {
-        display_memory(game);
-        return 0;
-    }
-    champ = game->list;
-    for (; champ; champ = champ->next) {
-        if (champ->alive == 1)
-            execute_champion(champ, game);
-    }
-    manage_cycle_to_die(game);
-    *cycle += 1;
-    return 1;
-}
-
 int game_loop(corewar_t *game)
 {
+    champ_t *champ = NULL;
     int cycle = 0;
 
     while (how_many_are_alive(game) > 1) {
-        if (in_game(game, &cycle) == 0)
+        if (cycle == game->dump) {
+            display_memory(game);
             return 0;
+        }
+        champ = game->list;
+        for (; champ; champ = champ->next) {
+            execute_champion(champ, game);
+        }
+        manage_cycle_to_die(game);
+        cycle++;
     }
     display_winner(game);
     return 0;

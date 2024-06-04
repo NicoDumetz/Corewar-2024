@@ -5,16 +5,25 @@
 ** create champ
 */
 
-#include "../include/corewar.h"
-#include "../include/op.h"
-#include "../include/my.h"
+#include "corewar.h"
+#include "op.h"
+#include "my.h"
+#include "errors.h"
 #include "stddef.h"
 #include <sys/stat.h>
 #include <string.h>
+#include <unistd.h>
 
-static char *close_dir(int fd)
+static char *read_errors(int fd, char const *filename, char *error_message)
 {
-    close(fd);
+    if (filename) {
+        write(2, filename, my_strlen(filename));
+        write(2, ": ", 2);
+    }
+    if (error_message)
+        write(2, error_message, my_strlen(error_message));
+    if (fd > 0)
+        close(fd);
     return NULL;
 }
 
@@ -26,16 +35,16 @@ char *read_file(const char *filename)
     ssize_t bytes;
 
     if (stat(filename, &file) == -1 || fd == -1)
-        return NULL;
+        return read_errors(0, filename, OPEN_FILE);
     if (file.st_size < 4)
-        return NULL;
+        return read_errors(0, filename, WRONG_MAGIC);
     content = (char *)malloc(file.st_size + 1);
     if (content == NULL)
-        return close_dir(fd);
+        return read_errors(fd, 0, 0);
     bytes = read(fd, content, file.st_size);
     if (bytes == -1) {
         free(content);
-        return close_dir(fd);
+        return read_errors(fd, 0, 0);
     }
     content[file.st_size] = '\0';
     close(fd);
@@ -55,37 +64,76 @@ static char *pick_bin(char *str, int size)
     return code;
 }
 
-static int check_magic(char *str)
+static int check_magic(char *str, char *filename)
 {
     if (str[0] == 0 && str[1] == -22 && str[2] == -125 && str[3] == -13)
         return 0;
-    write(2, "Wrong files, magic are not correct.\n",
-    my_strlen("Wrong files, magic are not correct.\n"));
+    free(str);
+    read_errors(0, filename, WRONG_MAGIC);
     return 84;
+}
+
+static bool check_champ(corewar_t *game, int *error)
+{
+    int champ_nb = 0;
+
+    for (champ_t *current = game->list; current; current = current->next) {
+        if (!((current->index >= 1 && current->index <= 4) ||
+        current->index == -1))
+            return true;
+        champ_nb++;
+    }
+    if (champ_nb > 4) {
+        write(2, TOO_MANY_CHAMP, my_strlen(TOO_MANY_CHAMP));
+        *error = 1;
+        return true;
+    }
+    if (champ_nb < 2) {
+        write(2, NOT_ENOUGH_CHAMP, my_strlen(NOT_ENOUGH_CHAMP));
+        *error = 1;
+        return true;
+    }
+    return false;
+}
+
+static void set_index(corewar_t *game)
+{
+    bool taken_index[4] = {false, false, false, false};
+    int index;
+
+    for (champ_t *current = game->list; current; current = current->next) {
+        if (current->index != -1)
+            taken_index[current->index - 1] = true;
+    }
+    for (champ_t *current = game->list; current; current = game->list) {
+        if (current->index != -1)
+            return;
+        for (index = 0; taken_index[index] && index < 4; index++);
+        current->index = index + 1;
+        current->reg[0] = current->index;
+        taken_index[index] = true;
+        game->list = current->next;
+        insert_champ(current, game);
+    }
 }
 
 static void init_champ_game(champ_t *champ)
 {
-    static int index = 1;
-
     for (int i = 1; i < REG_NUMBER; i++)
         champ->reg[i] = 0;
     champ->carry = 0;
     champ->alive = 1;
     champ->cycle_die = CYCLE_TO_DIE;
-    champ->index = index;
-    champ->reg[0] = index;
+    champ->reg[0] = champ->index;
     champ->wait = -1;
-    index += 1;
 }
 
-int add_champs(char *filename, corewar_t *game)
+int add_champs(char *filename, champ_t *champ, corewar_t *game)
 {
     char *str = read_file(filename);
-    champ_t *champ = malloc(sizeof(champ_t));
     union intconverter converter;
 
-    if (champ == NULL || str == NULL || check_magic(str) == 84)
+    if (champ == NULL || str == NULL || check_magic(str, filename) == 84)
         return 84;
     converter.bytes[0] = str[4 + PROG_NAME_LENGTH + 7];
     converter.bytes[1] = str[4 + PROG_NAME_LENGTH + 6];
@@ -102,18 +150,28 @@ int add_champs(char *filename, corewar_t *game)
     return 0;
 }
 
-int init_champ(int ac, char **av, corewar_t *game)
+int init_champ(char **av, corewar_t *game)
 {
-    int i = (game->dump != -1) ? 3 : 1;
+    champ_t *new = NULL;
+    int error = 0;
 
-    if (ac - i < 1 || ac - i > 4)
-        return 84;
     game->list = NULL;
-    for (; i < ac; i++) {
-        if (add_champs(av[i], game) == 84)
-            return 84;
+    for (unsigned char i = 1; av[i] && !error; i++) {
+        new = malloc(sizeof(champ_t));
+        if (new == NULL)
+            return 1;
+        new->pc = -1;
+        new->index = -1;
+        if (fetch_options(av, &i, new, game) || add_champs(av[i], new, game)) {
+            error = 1;
+            free(new);
+        }
     }
-    return 0;
+    if (error || check_champ(game, &error))
+        destroy_allchamps(game);
+    else
+        set_index(game);
+    return free_tab(av, error);
 }
 
 void destroy_allchamps(corewar_t *game)

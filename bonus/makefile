@@ -7,28 +7,27 @@
 
 SRC = main.c \
 	  draw_rect.c \
-	  draw_cube.c \
-	  game_loop_gl.c \
+	  manage_img.c \
+	  manage_text.c \
 
 OBJ = $(SRC:.c=.o)
-
 
 NAME = corewar
 
 all: $(NAME)
 
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra $(shell pkg-config --cflags freetype2)
 
-LDFLAGS = -lGL -lGLU -lglut -lglfw -lm
+LDFLAGS = -lGL -lGLU -lglut -lm -lfreetype
+
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS)
+	gcc -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS) -lglfw
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ)m
 
 fclean: clean
-	rm -f $(OBJ)
 	rm -f $(NAME)
 
 re: fclean all

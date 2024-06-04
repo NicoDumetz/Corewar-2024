@@ -5,9 +5,9 @@
 ** init memory
 */
 
-#include "../include/corewar.h"
-#include "../include/op.h"
-#include "../include/my.h"
+#include "corewar.h"
+#include "op.h"
+#include "my.h"
 #include "stddef.h"
 #include <sys/stat.h>
 
