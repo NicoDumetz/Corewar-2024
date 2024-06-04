@@ -36,17 +36,6 @@ static void execute_and(champ_t *champ, corewar_t *game, param_t *list)
     champ->carry = res == 0 ? 1 : 0;
 }
 
-int check_reg(param_t *list)
-{
-    if (list[0].type == T_REG && list[0].value - 1 > REG_NUMBER)
-        return 1;
-    if (list[1].type == T_REG && list[1].value - 1 > REG_NUMBER)
-        return 1;
-    if (list[2].value - 1 > REG_NUMBER)
-        return 1;
-    return 0;
-}
-
 void and_cor(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;

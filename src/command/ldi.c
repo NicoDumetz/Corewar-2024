@@ -30,8 +30,8 @@ static void execute_ldi(champ_t *champ, corewar_t *game, param_t *list)
     int first = value_of_param(champ, game, list[0]);
     int second = value_of_param(champ, game, list[1]);
     int reg = list[2].value;
-    int pc = (champ->pc + first + second) % IDX_MOD;
-    unsigned int value = read_int_from_memory(game, pc);
+    int pc = champ->pc + ((first + second) % IDX_MOD);
+    int value = read_int_from_memory(game, pc);
 
     champ->reg[reg - 1] = value;
     champ->carry = value == 0 ? 1 : 0;
@@ -44,12 +44,16 @@ void ldi(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param_except(3, bin);
-    if (list == NULL) {
+    if (list == NULL || list[2].type != T_REG || list[1].type == T_IND) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value_except(champ, game, list, 3);
-    execute_ldi(champ, game, list);
+    if (check_reg(list) == 0)
+        execute_ldi(champ, game, list);
+    else
+        champ->carry = 0;
     ldi_moove(champ, list, bin);
     return;
 }

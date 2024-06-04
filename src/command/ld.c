@@ -44,7 +44,7 @@ static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
     champ->carry = value == 0 ? 1 : 0;
 }
 
-static int check_var_ld(param_t *list)
+int check_var_ld(param_t *list)
 {
     if (list[0].type == T_REG) {
         free(list);

@@ -23,3 +23,14 @@ int check_only_reg(param_t *list)
     }
     return 0;
 }
+
+int check_reg(param_t *list)
+{
+    if (list[0].type == T_REG && list[0].value - 1 > REG_NUMBER)
+        return 1;
+    if (list[1].type == T_REG && list[1].value - 1 > REG_NUMBER)
+        return 1;
+    if (list[2].type == T_REG && list[2].value - 1 > REG_NUMBER)
+        return 1;
+    return 0;
+}
