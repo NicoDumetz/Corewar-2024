@@ -12,27 +12,22 @@
 #include <sys/stat.h>
 
 
-static void zjmp_moove(champ_t *champ, param_t *list, char *bin)
-{
-    int add = 0;
-
-    for (int i = 0; list[i].type != 0; i++) {
-        add += list[i].size;
-    }
-    my_printf("zjmp %s\n", champ->name);
-    add_pc(champ, add + 2);
-    free(list);
-    free(bin);
-    return;
-}
-
 void zjmp(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
-    char *bin = dec_to_octet(game->board[pc], "01", 8);
-    param_t *list;
+    union intconverter converter;
+    short index = 0;
 
-    list = read_param(3, bin);
-    zjmp_moove(champ, list, bin);
+    converter.bytes[0] = game->board[(pc + 1) % MEM_SIZE];
+    converter.bytes[1] = game->board[pc % MEM_SIZE];
+    converter.bytes[2] = 0;
+    converter.bytes[3] = 0;
+    index = converter.value;
+    if (champ->carry == 1) {
+        champ->pc += index % IDX_MOD;
+        champ->pc %= MEM_SIZE;
+        return;
+    }
+    add_pc(champ, 3);
     return;
 }
