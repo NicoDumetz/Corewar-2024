@@ -48,7 +48,10 @@ void execute_champion(champ_t *champ, corewar_t *game)
             add_pc(champ, 1);
         return;
     }
-    add_pc(champ, 1);
+    for (int i = 0; com_tab[i].name; i++) {
+        if (my_strcmp(command, com_tab[i].name) == 0)
+            com_tab[i].com(champ, game);
+    }
     return;
 }
 

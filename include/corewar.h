@@ -55,7 +55,7 @@ typedef struct command_s {
     char *name;
     void (*com)(champ_t *, corewar_t *);
 } command_t;
-
+extern command_t com_tab[];
 int init_champ(int ac, char **av, corewar_t *game);
 void display_memory(corewar_t *game);
 void destroy_allchamps(corewar_t *game);
