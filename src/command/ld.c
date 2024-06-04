@@ -36,7 +36,7 @@ static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
         return;
     }
     if (list[0].type == T_IND) {
-        index = (champ->pc + list[0].value) % IDX_MOD;
+        index = (champ->pc + ((short)list[0].value % IDX_MOD));
         value = read_int_from_memory(game, index);
     } else
         value = list[0].value;

@@ -47,7 +47,11 @@ void sub(champ_t *champ, corewar_t *game)
         return;
     }
     fill_value(champ, game, list, 3);
-    execute_sub(champ, list);
+    if (list[0].value - 1 <= REG_NUMBER && list[1].value - 1 <= REG_NUMBER &&
+        list[2].value - 1 <= REG_NUMBER)
+        execute_sub(champ, list);
+    else
+        champ->carry = 0;
     sub_moove(champ, list, bin);
     return;
 }

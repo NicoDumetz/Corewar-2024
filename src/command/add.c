@@ -47,7 +47,11 @@ void add(champ_t *champ, corewar_t *game)
         return;
     }
     fill_value(champ, game, list, 3);
-    execute_add(champ, list);
+    if (list[0].value - 1 <= REG_NUMBER && list[1].value - 1 <= REG_NUMBER &&
+        list[2].value - 1 <= REG_NUMBER)
+        execute_add(champ, list);
+    else
+        champ->carry = 0;
     add_moove(champ, list, bin);
     return;
 }
