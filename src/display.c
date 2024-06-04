@@ -17,9 +17,9 @@ void display_memory(corewar_t *game)
     int pos = 0;
 
     for (int j = 0; j < MEM_SIZE / 32; j++) {
-        my_printf("%x\t:", pos);
+        my_printf("%X\t:", pos);
         for (int i = 0; i < 32; i++) {
-            my_printf(" %02.2x", game->board[k]);
+            my_printf(" %02.2X", game->board[k]);
             k++;
         }
         pos += 32;

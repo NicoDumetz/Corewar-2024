@@ -61,6 +61,14 @@ static int check_magic(char *str)
     return 84;
 }
 
+static void init_champ_game(champ_t *champ)
+{
+    for (int i = 0; i < REG_NUMBER; i++)
+        champ->reg[i] = 0;
+    champ->carry = 0;
+    champ->alive = 1;
+}
+
 int add_champs(char *filename, corewar_t *game)
 {
     char *str = read_file(filename);
@@ -79,6 +87,7 @@ int add_champs(char *filename, corewar_t *game)
     champ->comment = str + 4 + PROG_NAME_LENGTH + 8;
     champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
+    init_champ_game(champ);
     champ->next = game->list;
     game->list = champ;
     return 0;

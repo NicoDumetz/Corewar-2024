@@ -10,6 +10,10 @@ SRC = main.c \
 	  src/create_champ.c \
 	  src/display.c \
 	  src/init_memory.c \
+	  src/game_loop/game_loop.c \
+	  src/game_loop/win_conditions.c \
+	  src/command/tab_com.c \
+	  src/command/live.c
 
 
 
@@ -26,11 +30,6 @@ CFLAGS += -Wall -Wextra -g
 required:
 	make -C lib/my
 
-$(NAME): required $(OBJ)
-	gcc -o $(NAME) $(OBJ) $(CFLAGS)
-
-clean:
-	rm -
 $(NAME): required $(OBJ)
 	gcc -o $(NAME) $(OBJ) $(CFLAGS)
 

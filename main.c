@@ -15,6 +15,7 @@ int main(int ac, char **av)
     if (init_champ(ac, av, &game) == 84)
         return 84;
     init_memory(&game);
+    game_loop(&game);
     display_memory(&game);
     destroy_allchamps(&game);
     return 0;
