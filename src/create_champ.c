@@ -98,14 +98,13 @@ int add_champs(char *filename, corewar_t *game)
     champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
     init_champ_game(champ);
-    champ->next = game->list;
-    game->list = champ;
+    insert_champ(champ, game);
     return 0;
 }
 
 int init_champ(int ac, char **av, corewar_t *game)
 {
-    int i = (strcmp(av[1], "-dump") == 0) ? 3 : 1;
+    int i = (game->dump != -1) ? 3 : 1;
 
     if (ac - i < 1 || ac - i > 4)
         return 84;
