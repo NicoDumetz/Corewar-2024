@@ -30,6 +30,8 @@ int how_many_are_alive(corewar_t *game)
     champ_t *champ = game->list;
     int nbr = 0;
 
+    if (game->cycle_die <= 0)
+        return -1;
     for (; champ; champ = champ->next) {
         if (champ->cycle_die <= 0)
             champ->alive = 0;
