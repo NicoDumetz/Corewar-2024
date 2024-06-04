@@ -109,4 +109,5 @@ void write_short_to_memory(short value, corewar_t *game, int address);
 int check_only_reg(param_t *list);
 int check_reg(param_t *list);
 int check_var_ld(param_t *list);
+void copy_of_champ(champ_t *champ, corewar_t *game, champ_t *new);
 #endif
