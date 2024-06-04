@@ -9,6 +9,17 @@
 #include "my.h"
 #include "errors.h"
 #include <stdlib.h>
+#include <unistd.h>
+
+static int help(int ac, char **av)
+{
+    if (ac < 2)
+        return 0;
+    if (!(av[1][0] == '-' && av[1][1] == 'h'))
+        return 0;
+    write(1, HELP, my_strlen(HELP));
+    return 1;
+}
 
 int free_tab(char **argv, int return_value)
 {
@@ -45,6 +56,8 @@ int main(int ac, char **av)
 {
     corewar_t game;
 
+    if (help(ac, av))
+        return 0;
     av = copy_argv(ac, av);
     if (av == NULL)
         return 84;

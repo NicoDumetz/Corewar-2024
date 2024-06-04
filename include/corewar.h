@@ -21,6 +21,18 @@
     #include <stdbool.h>
     #include "my.h"
     #include "op.h"
+    #define HELP1 "USAGE\n./corewar [-dump nbr_cycle] [[-n prog_number] "
+    #define HELP2 "[-a load_adress] prog_name] ...\n"
+    #define HELP3 "DESCRIPTION\n-dump nbr_cycle dump the memory after the "
+    #define HELP4 "nbr_cycle execution (if the round isn't already over) with "
+    #define HELP5 "the following format: 32 bytes/line in hexadecimal\n"
+    #define HELP6 "-n prog_number sets the next program's number. By default, "
+    #define HELP7 "the first free number in the parameter order\n"
+    #define HELP8 "-a load_adress sets the next program's loading adress. When"
+    #define HELP9 " no adress is specified, optimize the adresses so that the "
+    #define HELP10 "processes are as far away from each other as possible."
+    #define HELP11 HELP10 "The adresses are MEM_SIZE modulo.\n"
+    #define HELP HELP1 HELP2 HELP3 HELP4 HELP5 HELP6 HELP7 HELP8 HELP9 HELP11
 
 
 union intconverter {

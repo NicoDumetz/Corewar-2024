@@ -51,7 +51,7 @@ all: $(NAME)
 
 LDFLAGS = -lGL -lGLU -lglut -lglfw -lm
 
-CFLAGS += -Wall -Wextra -g -Llib -lmy -Iinclude
+CFLAGS += -Wall -Wextra -Llib -lmy -Iinclude
 
 required:
 	make -C lib/my

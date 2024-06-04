@@ -49,7 +49,7 @@ LIB_NAME = lib/libmy.a
 
 all: $(NAME)
 
-CFLAGS += -Wall -Wextra -g
+CFLAGS += -Wall -Wextra
 
 $(LIB_NAME):
 	make -C lib/my
