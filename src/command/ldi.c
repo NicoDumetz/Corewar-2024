@@ -25,16 +25,32 @@ static void ldi_moove(champ_t *champ, param_t *list, char *bin)
     return;
 }
 
+int value_of_param_for_ldi(champ_t *champ, corewar_t *game, param_t list)
+{
+    int index = 0;
+    union intconverter converter;
+
+    if (list.type == T_REG)
+        return champ->reg[list.value - 1];
+    if (list.type == T_DIR) {
+        return list.value;
+    }
+    converter.bytes[0] = game->board[(index + 1 % IDX_MOD) % MEM_SIZE];
+    converter.bytes[1] = game->board[(index % IDX_MOD) % MEM_SIZE];
+    converter.bytes[2] = 0;
+    converter.bytes[3] = 0;
+    return converter.value;
+}
+
 static void execute_ldi(champ_t *champ, corewar_t *game, param_t *list)
 {
-    int first = value_of_param(champ, game, list[0]);
+    int first = value_of_param_for_ldi(champ, game, list[0]);
     int second = value_of_param(champ, game, list[1]);
     int reg = list[2].value;
-    int pc = champ->pc + ((first) % IDX_MOD);
+    int pc = champ->pc + ((first + second) % IDX_MOD);
     int value = read_int_from_memory(game, pc);
 
-    value = champ->pc + (second % IDX_MOD);
-    champ->reg[reg - 1] = game->board[value % MEM_SIZE];
+    champ->reg[reg - 1] = value;
     champ->carry = value == 0 ? 1 : 0;
 }
 
