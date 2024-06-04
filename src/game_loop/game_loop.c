@@ -13,12 +13,15 @@
 
 void add_pc(champ_t *champ, int nbr)
 {
-    for (int i = 0; i < nbr; i++) {
-        champ->pc++;
+    int add = nbr > 0 ? 1 : -1;
+    int stop = nbr < 0 ? nbr * -1 : nbr;
+
+    for (int i = 0; i < stop; i++) {
+        champ->pc += add;
         if (champ->pc >= MEM_SIZE)
             champ->pc = 0;
         if (champ->pc < 0)
-            champ->pc = MEM_SIZE;
+            champ->pc = MEM_SIZE - 1;
     }
 }
 

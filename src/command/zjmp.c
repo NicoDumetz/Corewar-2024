@@ -16,16 +16,15 @@ void zjmp(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
     union intconverter converter;
-    short index = 0;
+    short value = 0;
 
     converter.bytes[0] = game->board[(pc + 1) % MEM_SIZE];
     converter.bytes[1] = game->board[pc % MEM_SIZE];
     converter.bytes[2] = 0;
     converter.bytes[3] = 0;
-    index = converter.value;
+    value = converter.value;
     if (champ->carry == 1) {
-        champ->pc += index % IDX_MOD;
-        champ->pc %= MEM_SIZE;
+        add_pc(champ, value);
         return;
     }
     add_pc(champ, 3);
