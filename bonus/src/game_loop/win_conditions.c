@@ -48,23 +48,11 @@ int how_many_are_alive(corewar_t *game)
 
 void display_winner(corewar_t *game)
 {
-    champ_t *champ = game->list;
-
     if (game->last_index == 0 && game->last_name == NULL) {
         my_printf("There are no winner.\n");
         return;
     }
-    if (how_many_are_alive(game) != 1) {
-        my_printf("The player %d (%s) has won.\n",
+    my_printf("The player %d (%s) has won.\n",
             game->last_index, game->last_name);
-        return;
-    }
-    for (; champ; champ = champ->next) {
-        if (champ->alive == 1) {
-            my_printf("The player %d (%s) has won.\n",
-            champ->index, champ->name);
-            break;
-        }
-    }
     return;
 }

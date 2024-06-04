@@ -69,8 +69,8 @@ static int in_game(corewar_t *game, int *cycle)
     for (; champ; champ = champ->next) {
         if (champ->alive == 1)
             execute_champion(champ, game);
+        manage_cycle_to_die(game);
     }
-    manage_cycle_to_die(game);
     *cycle += 1;
     return 1;
 }

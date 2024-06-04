@@ -11,7 +11,7 @@
 	zjmp	%:start
 
 lf:
-	live	%9999999
+	live	%1
 	lfork	%:lf
 
 start:
@@ -45,21 +45,21 @@ live:
 	live	%93999
 	live	%93999
 	live	%93999
-	live	%93999
+	live	%1
 	live	%93999
 	live	%93999
 	live	%93999
 	zjmp	%:live
 
 backward:
-	live	%9999999
+	live	%1
 	sub		r13, r15, r13
 	sti		r9, r10, r13
 	ld		%0, r16
 	zjmp	%:backward
 
 forward:
-	live	%9999999
+	live	%1
 	add		r11, r15, r11
 	sti		r7, r10, r11
 	sti		r8, r10, r11
