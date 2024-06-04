@@ -59,33 +59,27 @@ void fill_value_except(champ_t *champ, corewar_t *game, param_t *list, int len)
     return;
 }
 
-static param_t *init_list(int len)
-{
-    param_t *list = malloc(sizeof(param_t) * (len + 1));
-
-    for (int i = 0; i < len; i++) {
-        list[i].size = 0;
-        list[i].type = 0;
-        list[i].value = 0;
-    }
-    return list;
-}
-
 param_t *read_param_except(int len, char *bin)
 {
-    param_t *list = init_list(len);
+    param_t *list = malloc(sizeof(param_t) * (len + 1));
     int ind = 0;
-    int num = 0;
 
     for (int i = 0; i < len; i++) {
-        num += fill_types_except(list, i, bin, ind);
+        if (bin[ind] == '1' && bin[ind + 1] == '0') {
+            list[i].type = T_DIR;
+            list[i].size = 2;
+        }
+        if (bin[ind] == '1' && bin[ind + 1] == '1') {
+            list[i].type = T_IND;
+            list[i].size = 2;
+        }
+        if (bin[ind] == '0' && bin[ind + 1] == '1') {
+            list[i].type = T_REG;
+            list[i].size = 1;
+        }
         ind += 2;
     }
     list[len].type = 0;
-    if (num != len) {
-        free(list);
-        return NULL;
-    }
     return list;
 }
 
@@ -111,7 +105,7 @@ static int fill_types(param_t *list, int i, char *bin, int ind)
 
 param_t *read_param(int len, char *bin)
 {
-    param_t *list = init_list(len);
+    param_t *list = malloc(sizeof(param_t) * (len + 1));
     int ind = 0;
     int num = 0;
 
@@ -120,10 +114,8 @@ param_t *read_param(int len, char *bin)
         ind += 2;
     }
     list[len].type = 0;
-    if (num != len) {
-        free(list);
+    if (num != len)
         return NULL;
-    }
     return list;
 }
 
@@ -153,6 +145,6 @@ int value_of_param(champ_t *champ, corewar_t *game, param_t list)
     if (list.type == T_DIR) {
         return list.value;
     }
-    index = (champ->pc + ((short)list.value % IDX_MOD));
+    index = (champ->pc + list.value) % IDX_MOD;
     return read_int_from_memory(game, index);
 }

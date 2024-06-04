@@ -16,10 +16,9 @@ static void execute_aff(champ_t *champ, corewar_t *game)
 {
     int reg = game->board[champ->pc + 2];
 
-    if (reg > 16 || reg <= 0)
+    if (reg > 16)
         return;
-    if (champ->reg[reg] != 0)
-        my_printf("%c\n", champ->reg[reg]);
+    my_printf("%d\n", champ->reg[reg]);
 }
 
 void aff(champ_t *champ, corewar_t *game)
