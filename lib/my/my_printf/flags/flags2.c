@@ -120,8 +120,7 @@ int print_hex(va_list list, int *compt, int *list_flagscompt)
     if (list_flagscompt[2] > 0)
         print_width(compt, list_flagscompt, str);
     *compt += my_strlen(str);
-    if (list_flagscompt[5] >= 0)
-        free(str);
+    free(str);
     return 1;
 }
 
@@ -144,7 +143,6 @@ int print_hex_maj(va_list list, int *compt, int *list_flagscompt)
     if (list_flagscompt[2] > 0)
         print_width(compt, list_flagscompt, str);
     *compt += my_strlen(str);
-    if (list_flagscompt[5] >= 0)
-        free(str);
+    free(str);
     return 1;
 }

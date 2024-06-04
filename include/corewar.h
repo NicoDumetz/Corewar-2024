@@ -19,6 +19,7 @@
     #include <stddef.h>
     #include <wchar.h>
     #include "my.h"
+    #include "op.h"
 
 union intconverter {
     char bytes[4];
@@ -31,12 +32,20 @@ typedef struct champ_s {
     int prog_size;
     char *comment;
     char *code;
+    char *all;
+    int pos;
     struct champ_s *next;
 } champ_t;
 
 typedef struct corewar_s {
     champ_t *list;
+    unsigned char board[MEM_SIZE];
+    int len_hero;
 } corewar_t;
 
 int init_champ(int ac, char **av, corewar_t *game);
+void display_memory(corewar_t *game);
+void destroy_allchamps(corewar_t *game);
+void init_memory(corewar_t *game);
+int len_hero(corewar_t *game);
 #endif

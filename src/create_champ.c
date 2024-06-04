@@ -76,7 +76,8 @@ int add_champs(char *filename, corewar_t *game)
     champ->name = str + 4;
     champ->prog_size = converter.value;
     champ->filename = filename;
-    champ->comment = str + 4 + PROG_NAME_LENGTH + 7;
+    champ->comment = str + 4 + PROG_NAME_LENGTH + 8;
+    champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
     champ->next = game->list;
     game->list = champ;
@@ -85,11 +86,30 @@ int add_champs(char *filename, corewar_t *game)
 
 int init_champ(int ac, char **av, corewar_t *game)
 {
-    if (ac < 2 || ac > 4)
+    if (ac < 2 || ac > 5)
         return 84;
+    game->list = NULL;
     for (int i = 1; i < ac; i++) {
         if (add_champs(av[i], game) == 84)
             return 84;
     }
     return 0;
+}
+
+void destroy_allchamps(corewar_t *game)
+{
+    champ_t *champ = game->list;
+    champ_t *prev = NULL;
+
+    for (; champ; champ = champ->next) {
+        if (champ->code)
+            free(champ->code);
+        if (prev)
+            free(prev);
+        if (champ->all)
+            free(champ->all);
+        prev = champ;
+    }
+    free(prev);
+    return;
 }

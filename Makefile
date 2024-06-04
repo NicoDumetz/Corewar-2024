@@ -8,6 +8,8 @@
 SRC = main.c \
 	  op.c \
 	  src/create_champ.c \
+	  src/display.c \
+	  src/init_memory.c \
 
 
 
@@ -19,11 +21,16 @@ NAME = corewar
 
 all: $(NAME)
 
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -g
 
 required:
 	make -C lib/my
 
+$(NAME): required $(OBJ)
+	gcc -o $(NAME) $(OBJ) $(CFLAGS)
+
+clean:
+	rm -
 $(NAME): required $(OBJ)
 	gcc -o $(NAME) $(OBJ) $(CFLAGS)
 

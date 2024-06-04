@@ -26,9 +26,11 @@ static char *my_revstr_convert(char *str)
 char *my_put_convert_base(unsigned long nb, char *base)
 {
     int len = my_strlen(base);
-    char res[30000];
+    char *res = (char *)malloc((my_intlen(nb) + 1) * sizeof(char));
     int index;
 
+    for (int i = 0; i < my_intlen(nb); i++)
+        res[i] = '\0';
     if (nb == 0) {
         res[0] = '0';
         res[1] = '\0';
@@ -65,13 +67,17 @@ static char *calcul_prec(char *res, int precision)
 {
     int i;
     char *prec;
+    int go = 0;
 
     prec = malloc(sizeof(char) * (precision + my_strlen(res)));
     if (precision > my_strlen(res)) {
         for (i = 0; i < precision - my_strlen(res); i++)
             prec[i] = '0';
         prec[i] = '\0';
+        go = 1;
     }
+    if (go == 0)
+        prec[0] = '\0';
     my_revstr_convert(res);
     return my_strcat(prec, res);
 }
