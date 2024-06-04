@@ -5,9 +5,9 @@
 ** sti
 */
 
-#include "../../include/corewar.h"
-#include "../../include/op.h"
-#include "../../include/my.h"
+#include "../include/corewar.h"
+#include "../include/op.h"
+#include "../include/my.h"
 #include "stddef.h"
 #include <sys/stat.h>
 

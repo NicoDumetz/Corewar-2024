@@ -5,7 +5,7 @@
 ** insert_champ.c
 */
 
-#include "../include/corewar.h"
+#include "corewar.h"
 
 void insert_champ(champ_t *champ, corewar_t *game)
 {

@@ -24,6 +24,7 @@
     #include <math.h>
     #include <GL/gl.h>
     #include <GL/glu.h>
+    #include <stdbool.h>
     #include "my.h"
     #include "op.h"
 
@@ -76,14 +77,19 @@ typedef struct command_s {
     void (*com)(champ_t *, corewar_t *);
 } command_t;
 extern command_t com_tab[];
+int set_pc_champ(corewar_t *game);
+int free_tab(char **argv, int return_value);
+int fetch_options(char **argv, unsigned char *i, champ_t *new,
+    corewar_t *game);
 void insert_champ(champ_t *champ, corewar_t *game);
-int check_flags(int argc, char **argv, corewar_t *game);
-int init_champ(int ac, char **av, corewar_t *game);
+bool is_num(char *str);
+int check_dump(char **argv, corewar_t *game);
+int init_champ(char **av, corewar_t *game);
 void display_memory(corewar_t *game);
 void destroy_allchamps(corewar_t *game);
-void init_memory(corewar_t *game);
+int init_memory(corewar_t *game);
 int len_hero(corewar_t *game);
-int game_loop(corewar_t *game, GLFWwindow* window);
+int game_loop(corewar_t *game, GLFWwindow *window);
 void display_winner(corewar_t *game);
 int how_many_are_alive(corewar_t *game);
 void add_pc(champ_t *champ, int nbr);
@@ -121,7 +127,6 @@ int check_reg(param_t *list);
 int check_var_ld(param_t *list);
 void copy_of_champ(champ_t *champ, champ_t *new);
 int fill_types_except(param_t *list, int i, char *bin, int ind);
-
 void manage_profil(void);
 void drawCube(float x, float y, float z, float size);
 void manage_cube(corewar_t *game);
