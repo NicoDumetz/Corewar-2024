@@ -35,7 +35,8 @@ SRC = main.c \
 	  src/write_in_mem.c \
 	  src/check_dump.c \
 	  src/insert_champ.c \
-	  src/fetch_options.c
+	  src/fetch_options.c \
+	  src/set_pc_champ.c
 
 
 OBJ = $(SRC:.c=.o)

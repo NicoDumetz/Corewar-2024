@@ -67,6 +67,7 @@ typedef struct command_s {
     void (*com)(champ_t *, corewar_t *);
 } command_t;
 extern command_t com_tab[];
+int set_pc_champ(corewar_t *game);
 int free_tab(char **argv, int return_value);
 int fetch_options(char **argv, unsigned char *i, champ_t *new,
     corewar_t *game);
@@ -76,7 +77,7 @@ int check_dump(char **argv, corewar_t *game);
 int init_champ(char **av, corewar_t *game);
 void display_memory(corewar_t *game);
 void destroy_allchamps(corewar_t *game);
-void init_memory(corewar_t *game);
+int init_memory(corewar_t *game);
 int len_hero(corewar_t *game);
 int game_loop(corewar_t *game);
 void display_winner(corewar_t *game);

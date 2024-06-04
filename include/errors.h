@@ -21,4 +21,5 @@
     #define WRONG_MAGIC "Wrong files, magic is not correct.\n"
     #define TOO_MANY_CHAMP "To many champions, 4 maximum\n"
     #define NOT_ENOUGH_CHAMP "Not enough champ, need at least 2 champions\n"
+    #define OVERLAP "Champion overlap each others\n"
 #endif // !COREWAR_ERROR_MESSAGES

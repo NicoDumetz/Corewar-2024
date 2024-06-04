@@ -33,12 +33,8 @@ void write_code_champ(corewar_t *game, int pos, champ_t *champ)
     return;
 }
 
-void init_memory(corewar_t *game)
+int init_memory(corewar_t *game)
 {
-    champ_t *champ = game->list;
-    int div;
-    int pos = 0;
-
     game->cycle_delta = CYCLE_DELTA;
     game->cycle_die = CYCLE_TO_DIE;
     game->len_hero = len_hero(game);
@@ -47,10 +43,9 @@ void init_memory(corewar_t *game)
     game->last_index = 0;
     for (int i = 0; i < MEM_SIZE; i++)
         game->board[i] = 0;
-    div = MEM_SIZE / game->len_hero + 1;
-    for (; champ; champ = champ->next) {
-        champ->pc = (int)pos;
-        write_code_champ(game, champ->pc, champ);
-        pos += div;
-    }
+    if (set_pc_champ(game))
+        return 1;
+    for (champ_t *current = game->list; current; current = current->next)
+        write_code_champ(game, current->pc, current);
+    return 0;
 }

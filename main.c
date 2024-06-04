@@ -52,7 +52,10 @@ int main(int ac, char **av)
         return free_tab(av, 84);
     if (init_champ(av, &game))
         return 84;
-    init_memory(&game);
+    if (init_memory(&game)) {
+        destroy_allchamps(&game);
+        return 84;
+    }
     game_loop(&game);
     destroy_allchamps(&game);
     return 0;
