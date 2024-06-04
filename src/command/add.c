@@ -26,6 +26,14 @@ static void add_moove(champ_t *champ, param_t *list, char *bin)
     return;
 }
 
+static void execute_add(champ_t *champ, param_t *list)
+{
+    int value = champ->reg[list[0].value] + champ->reg[list[1].value];
+
+    champ->reg[list[2].value] = value;
+    champ->carry = value == 0 ? 1 : 0;
+}
+
 void add(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
@@ -33,6 +41,8 @@ void add(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
+    fill_value(champ, game, list, 3);
+    execute_add(champ, list);
     add_moove(champ, list, bin);
     return;
 }
