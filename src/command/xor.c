@@ -43,12 +43,16 @@ void xor_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
-    if (list == NULL) {
+    if (list == NULL || list[2].type != T_REG) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 3);
-    execute_xor(champ, game, list);
+    if (check_reg(list) == 0)
+        execute_xor(champ, game, list);
+    else
+        champ->carry = 0;
     xor_moove(champ, list, bin);
     return;
 }

@@ -41,12 +41,17 @@ void sub(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
-    if (list == NULL) {
+    if (list == NULL || check_only_reg(list) == 1) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 3);
-    execute_sub(champ, list);
+    if (list[0].value - 1 <= REG_NUMBER && list[1].value - 1 <= REG_NUMBER &&
+        list[2].value - 1 <= REG_NUMBER)
+        execute_sub(champ, list);
+    else
+        champ->carry = 0;
     sub_moove(champ, list, bin);
     return;
 }

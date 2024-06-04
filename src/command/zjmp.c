@@ -24,7 +24,7 @@ void zjmp(champ_t *champ, corewar_t *game)
     converter.bytes[3] = 0;
     value = converter.value;
     if (champ->carry == 1) {
-        add_pc(champ, value);
+        add_pc(champ, (value % IDX_MOD));
         return;
     }
     add_pc(champ, 3);
