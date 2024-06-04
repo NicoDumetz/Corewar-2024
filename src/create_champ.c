@@ -72,6 +72,7 @@ static void init_champ_game(champ_t *champ, int k)
     champ->cycle_die = 0;
     champ->index = k;
     champ->reg[0] = k;
+    champ->wait = -1;
 }
 
 int add_champs(char *filename, corewar_t *game, int i)

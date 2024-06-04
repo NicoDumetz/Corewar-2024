@@ -13,8 +13,23 @@ SRC = main.c \
 	  src/game_loop/game_loop.c \
 	  src/game_loop/win_conditions.c \
 	  src/command/tab_com.c \
-	  src/command/live.c
-
+	  src/command/live.c \
+	  src/command/ld.c \
+	  src/command/read_param.c \
+	  src/command/stock.c \
+	  src/command/add.c \
+	  src/command/sub.c \
+	  src/command/and.c \
+	  src/command/or.c \
+	  src/command/xor.c \
+	  src/command/zjmp.c \
+	  src/command/ldi.c \
+	  src/command/sti.c \
+	  src/command/fork.c \
+	  src/command/lld.c \
+	  src/command/lldi.c \
+	  src/command/lfork.c \
+	  src/command/aff.c \
 
 
 OBJ = $(SRC:.c=.o)

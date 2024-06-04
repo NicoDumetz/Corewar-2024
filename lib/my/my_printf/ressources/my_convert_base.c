@@ -8,7 +8,7 @@
 #include "my_printf.h"
 #include "../../my.h"
 
-static char *my_revstr_convert(char *str)
+char *my_revstr_convert(char *str)
 {
     int index;
     int len = my_strlen(str) - 1;
@@ -26,10 +26,10 @@ static char *my_revstr_convert(char *str)
 char *my_put_convert_base(unsigned long nb, char *base)
 {
     int len = my_strlen(base);
-    char *res = (char *)malloc((my_intlen(nb) + 1) * sizeof(char));
+    char *res = (char *)malloc(100);
     int index;
 
-    for (int i = 0; i < my_intlen(nb); i++)
+    for (int i = 0; i < 100; i++)
         res[i] = '\0';
     if (nb == 0) {
         res[0] = '0';

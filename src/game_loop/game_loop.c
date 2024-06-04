@@ -59,8 +59,7 @@ int game_loop(corewar_t *game)
 {
     champ_t *champ = NULL;
 
-    //while (how_many_are_alive(game) > 1) { en attendant le dump
-    for (int i = 0; i < 50; i++) {
+    while (how_many_are_alive(game) > 1) {
         champ = game->list;
         for (; champ; champ = champ->next) {
             execute_champion(champ, game);

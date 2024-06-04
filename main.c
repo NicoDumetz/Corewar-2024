@@ -16,7 +16,6 @@ int main(int ac, char **av)
         return 84;
     init_memory(&game);
     game_loop(&game);
-    // display_memory(&game); en attendant le dump
     destroy_allchamps(&game);
     return 0;
 }
