@@ -33,8 +33,8 @@ static void execute_ldi(champ_t *champ, corewar_t *game, param_t *list)
     int pc = champ->pc + ((first) % IDX_MOD);
     int value = read_int_from_memory(game, pc);
 
-    value += second;
-    champ->reg[reg - 1] = value;
+    value = champ->pc + (second % IDX_MOD);
+    champ->reg[reg - 1] = game->board[value % MEM_SIZE].c;
     champ->carry = value == 0 ? 1 : 0;
 }
 
