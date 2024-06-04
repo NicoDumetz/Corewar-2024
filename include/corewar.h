@@ -39,6 +39,7 @@ typedef struct champ_s {
     int index;
     int reg[REG_NUMBER];
     int carry;
+    int cycle_die;
     struct champ_s *next;
 } champ_t;
 
@@ -46,6 +47,8 @@ typedef struct corewar_s {
     champ_t *list;
     unsigned char board[MEM_SIZE];
     int len_hero;
+    int cycle_die;
+    int cycle_delta;
 } corewar_t;
 typedef struct command_s {
     char *name;

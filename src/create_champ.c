@@ -67,6 +67,7 @@ static void init_champ_game(champ_t *champ)
         champ->reg[i] = 0;
     champ->carry = 0;
     champ->alive = 1;
+    champ->cycle_die = 0;
 }
 
 int add_champs(char *filename, corewar_t *game)
