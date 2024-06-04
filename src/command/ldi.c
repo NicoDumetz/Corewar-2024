@@ -30,7 +30,7 @@ static void execute_ldi(champ_t *champ, corewar_t *game, param_t *list)
     int first = value_of_param(champ, game, list[0]);
     int second = value_of_param(champ, game, list[1]);
     int reg = list[2].value;
-    int pc = (champ->pc + first + second);
+    int pc = (champ->pc + first + second) % IDX_MOD;
     unsigned int value = read_int_from_memory(game, pc);
 
     champ->reg[reg - 1] = value;
