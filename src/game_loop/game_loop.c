@@ -60,13 +60,19 @@ void execute_champion(champ_t *champ, corewar_t *game)
 int game_loop(corewar_t *game)
 {
     champ_t *champ = NULL;
+    int cycle = 0;
 
     while (how_many_are_alive(game) > 1) {
+        if (cycle == game->dump) {
+            display_memory(game);
+            return 0;
+        }
         champ = game->list;
         for (; champ; champ = champ->next) {
             execute_champion(champ, game);
         }
         manage_cycle_to_die(game);
+        cycle++;
     }
     display_winner(game);
     return 0;

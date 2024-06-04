@@ -10,6 +10,7 @@
 #include "../include/my.h"
 #include "stddef.h"
 #include <sys/stat.h>
+#include <string.h>
 
 static char *close_dir(int fd)
 {
@@ -101,10 +102,12 @@ int add_champs(char *filename, corewar_t *game, int i)
 
 int init_champ(int ac, char **av, corewar_t *game)
 {
-    if (ac < 2 || ac > 5)
+    int i = (strcmp(av[1], "-dump") == 0) ? 3 : 1;
+
+    if (ac - i < 1 || ac - i > 4)
         return 84;
     game->list = NULL;
-    for (int i = 1; i < ac; i++) {
+    for (; i < ac; i++) {
         if (add_champs(av[i], game, i) == 84)
             return 84;
     }

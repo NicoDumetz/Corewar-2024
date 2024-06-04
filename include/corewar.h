@@ -57,12 +57,14 @@ typedef struct corewar_s {
     int cycle_die;
     int cycle_delta;
     int nbr_live;
+    int dump;
 } corewar_t;
 typedef struct command_s {
     char *name;
     void (*com)(champ_t *, corewar_t *);
 } command_t;
 extern command_t com_tab[];
+int check_flags(int argc, char **argv, corewar_t *game);
 int init_champ(int ac, char **av, corewar_t *game);
 void display_memory(corewar_t *game);
 void destroy_allchamps(corewar_t *game);

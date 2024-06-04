@@ -12,6 +12,8 @@ int main(int ac, char **av)
 {
     corewar_t game;
 
+    if (check_flags(ac, av, &game))
+        return 84;
     if (init_champ(ac, av, &game) == 84)
         return 84;
     init_memory(&game);
