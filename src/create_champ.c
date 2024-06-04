@@ -64,19 +64,22 @@ static int check_magic(char *str)
     return 84;
 }
 
-static void init_champ_game(champ_t *champ, int k)
+static void init_champ_game(champ_t *champ)
 {
+    static int index = 1;
+
     for (int i = 1; i < REG_NUMBER; i++)
         champ->reg[i] = 0;
     champ->carry = 0;
     champ->alive = 1;
     champ->cycle_die = CYCLE_TO_DIE;
-    champ->index = k;
-    champ->reg[0] = k;
+    champ->index = index;
+    champ->reg[0] = index;
     champ->wait = -1;
+    index += 1;
 }
 
-int add_champs(char *filename, corewar_t *game, int i)
+int add_champs(char *filename, corewar_t *game)
 {
     char *str = read_file(filename);
     champ_t *champ = malloc(sizeof(champ_t));
@@ -94,7 +97,7 @@ int add_champs(char *filename, corewar_t *game, int i)
     champ->comment = str + 4 + PROG_NAME_LENGTH + 8;
     champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
-    init_champ_game(champ, i);
+    init_champ_game(champ);
     champ->next = game->list;
     game->list = champ;
     return 0;
@@ -108,7 +111,7 @@ int init_champ(int ac, char **av, corewar_t *game)
         return 84;
     game->list = NULL;
     for (; i < ac; i++) {
-        if (add_champs(av[i], game, i) == 84)
+        if (add_champs(av[i], game) == 84)
             return 84;
     }
     return 0;

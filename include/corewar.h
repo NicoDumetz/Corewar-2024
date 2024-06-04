@@ -58,6 +58,8 @@ typedef struct corewar_s {
     int cycle_delta;
     int nbr_live;
     int dump;
+    int last_index;
+    char *last_name;
 } corewar_t;
 typedef struct command_s {
     char *name;

@@ -15,5 +15,6 @@ void manage_cycle_to_die(corewar_t *game)
 {
     if (game->nbr_live >= NBR_LIVE) {
         game->cycle_die -= game->cycle_delta;
+        game->nbr_live = 0;
     }
 }

@@ -30,7 +30,7 @@ static void execute_sti(champ_t *champ, corewar_t *game, param_t *list)
     int reg = list[0].value;
     int second = value_of_param(champ, game, list[1]);
     int third = value_of_param(champ, game, list[2]);
-    int pc = (champ->pc + third + second) % IDX_MOD;
+    int pc = (champ->pc + third + second);
 
     write_int_to_memory(champ->reg[reg - 1], game, pc);
 }

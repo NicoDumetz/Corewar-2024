@@ -30,7 +30,7 @@ static void execute_or(champ_t *champ, corewar_t *game, param_t *list)
     int first = value_of_param(champ, game, list[0]);
     int second = value_of_param(champ, game, list[1]);
     int reg = list[2].value;
-    unsigned int res = first | second;
+    int res = first | second;
 
     champ->reg[reg - 1] = res;
     champ->carry = res == 0 ? 1 : 0;

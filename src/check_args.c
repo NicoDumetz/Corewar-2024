@@ -29,6 +29,6 @@ int check_flags(int argc, char **argv, corewar_t *game)
         return 0;
     if (!argv[2] || !is_num(argv[2]))
         return 84;
-    game->dump = atoi(argv[2]);
+    game->dump = my_getnbr(argv[2]);
     return 0;
 }
