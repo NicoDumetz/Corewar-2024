@@ -11,6 +11,15 @@
 #include "stddef.h"
 #include <sys/stat.h>
 
+static void set_index(champ_t *temp, int value, corewar_t *game)
+{
+    for (temp = game->list; temp; temp = temp->next) {
+        if (temp->index == value) {
+            temp->cycle_die = game->cycle_die;
+        }
+    }
+}
+
 void live(champ_t *champ, corewar_t *game)
 {
     champ_t *temp = game->list;
@@ -28,11 +37,7 @@ void live(champ_t *champ, corewar_t *game)
             break;
         }
     }
-    for (temp = game->list; temp; temp = temp->next) {
-        if (temp->index == value) {
-            temp->cycle_die = game->cycle_die;
-        }
-    }
+    set_index(temp, value, game);
     add_pc(champ, 5);
     return;
 }
