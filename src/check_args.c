@@ -25,7 +25,7 @@ int check_flags(int argc, char **argv, corewar_t *game)
     game->dump = -1;
     if (argc < 2)
         return 84;
-    if (my_strcmp(argv[1], "-dump"))
+    if (strcmp(argv[1], "-dump"))
         return 0;
     if (!argv[2] || !is_num(argv[2]))
         return 84;

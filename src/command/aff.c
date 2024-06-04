@@ -18,7 +18,8 @@ static void execute_aff(champ_t *champ, corewar_t *game)
 
     if (reg > 16)
         return;
-    my_printf("%d\n", champ->reg[reg]);
+    if (champ->reg[reg] != 0)
+        my_printf("%c\n", champ->reg[reg]);
 }
 
 void aff(champ_t *champ, corewar_t *game)

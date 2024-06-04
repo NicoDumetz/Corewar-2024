@@ -66,7 +66,6 @@ typedef struct command_s {
     void (*com)(champ_t *, corewar_t *);
 } command_t;
 extern command_t com_tab[];
-void insert_champ(champ_t *champ, corewar_t *game);
 int check_flags(int argc, char **argv, corewar_t *game);
 int init_champ(int ac, char **av, corewar_t *game);
 void display_memory(corewar_t *game);
