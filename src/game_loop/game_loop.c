@@ -69,7 +69,8 @@ int game_loop(corewar_t *game)
         }
         champ = game->list;
         for (; champ; champ = champ->next) {
-            execute_champion(champ, game);
+            if (champ->alive == 1)
+                execute_champion(champ, game);
         }
         manage_cycle_to_die(game);
         cycle++;

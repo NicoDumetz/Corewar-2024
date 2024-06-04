@@ -20,13 +20,12 @@ void copy_of_champ(champ_t *champ, champ_t *new)
     new->comment = champ->comment;
     new->all = my_strdup(champ->all);
     new->code = my_strdup(champ->code);
-    for (int i = 1; i < REG_NUMBER; i++)
-        new->reg[i] = 0;
-    new->carry = 0;
-    new->alive = 1;
+    for (int i = 0; i < REG_NUMBER; i++)
+        new->reg[i] = champ->reg[i];
+    new->carry = champ->carry;
+    new->alive = champ->alive;
     new->cycle_die = champ->cycle_die;
     new->index = champ->index;
-    new->reg[0] = champ->index;
     new->wait = -1;
 }
 
