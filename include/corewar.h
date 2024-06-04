@@ -20,4 +20,23 @@
     #include <wchar.h>
     #include "my.h"
 
+union intconverter {
+    char bytes[4];
+    int value;
+};
+
+typedef struct champ_s {
+    char *name;
+    char *filename;
+    int prog_size;
+    char *comment;
+    char *code;
+    struct champ_s *next;
+} champ_t;
+
+typedef struct corewar_s {
+    champ_t *list;
+} corewar_t;
+
+int init_champ(int ac, char **av, corewar_t *game);
 #endif

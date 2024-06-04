@@ -7,6 +7,8 @@
 
 SRC = main.c \
 	  op.c \
+	  src/create_champ.c \
+
 
 
 OBJ = $(SRC:.c=.o)
