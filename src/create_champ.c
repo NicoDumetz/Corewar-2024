@@ -98,8 +98,7 @@ int add_champs(char *filename, corewar_t *game)
     champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
     init_champ_game(champ);
-    champ->next = game->list;
-    game->list = champ;
+    insert_champ(champ, game);
     return 0;
 }
 
