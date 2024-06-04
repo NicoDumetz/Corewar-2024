@@ -110,4 +110,5 @@ int check_only_reg(param_t *list);
 int check_reg(param_t *list);
 int check_var_ld(param_t *list);
 void copy_of_champ(champ_t *champ, champ_t *new);
+int fill_types_except(param_t *list, int i, char *bin, int ind);
 #endif

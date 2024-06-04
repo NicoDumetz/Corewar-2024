@@ -34,3 +34,23 @@ int check_reg(param_t *list)
         return 1;
     return 0;
 }
+
+int fill_types_except(param_t *list, int i, char *bin, int ind)
+{
+    if (bin[ind] == '1' && bin[ind + 1] == '0') {
+        list[i].type = T_DIR;
+        list[i].size = 2;
+        return 1;
+    }
+    if (bin[ind] == '1' && bin[ind + 1] == '1') {
+        list[i].type = T_IND;
+        list[i].size = 2;
+        return 1;
+    }
+    if (bin[ind] == '0' && bin[ind + 1] == '1') {
+        list[i].type = T_REG;
+        list[i].size = 1;
+        return 1;
+    }
+    return 0;
+}

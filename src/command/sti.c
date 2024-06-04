@@ -44,6 +44,7 @@ void sti(champ_t *champ, corewar_t *game)
     list = read_param_except(3, bin);
     if (list == NULL || list[0].type != T_REG || list[2].type == T_IND) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value_except(champ, game, list, 3);

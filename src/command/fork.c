@@ -14,10 +14,10 @@
 
 void copy_of_champ(champ_t *champ, champ_t *new)
 {
-    new->name = my_strdup(champ->name);
+    new->name = champ->name;
     new->prog_size = champ->prog_size;
-    new->filename = my_strdup(champ->filename);
-    new->comment = my_strdup(champ->comment);
+    new->filename = champ->filename;
+    new->comment = champ->comment;
     new->all = my_strdup(champ->all);
     new->code = my_strdup(champ->code);
     for (int i = 1; i < REG_NUMBER; i++)
