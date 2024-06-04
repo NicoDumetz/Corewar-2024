@@ -69,7 +69,7 @@ static void init_champ_game(champ_t *champ, int k)
         champ->reg[i] = 0;
     champ->carry = 0;
     champ->alive = 1;
-    champ->cycle_die = 0;
+    champ->cycle_die = CYCLE_TO_DIE;
     champ->index = k;
     champ->reg[0] = k;
     champ->wait = -1;

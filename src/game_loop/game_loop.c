@@ -40,8 +40,7 @@ void execute_champion(champ_t *champ, corewar_t *game)
     char *command = NULL;
 
     champ->wait--;
-    if (champ->alive == 0)
-        return;
+    champ->cycle_die--;
     command = which_command(champ, game);
     if (command == NULL) {
         if (champ->wait <= -1)
@@ -65,5 +64,6 @@ int game_loop(corewar_t *game)
             execute_champion(champ, game);
         }
     }
+    display_winner(game);
     return 0;
 }
