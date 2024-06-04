@@ -34,7 +34,8 @@ SRC = main.c \
 	  src/dec_to_octet.c \
 	  src/write_in_mem.c \
 	  src/check_args.c \
-	  src/insert_champ.c
+	  src/insert_champ.c \
+	  src/check_var.c
 
 
 OBJ = $(SRC:.c=.o)

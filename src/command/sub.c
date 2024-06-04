@@ -41,8 +41,9 @@ void sub(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
-    if (list == NULL) {
+    if (list == NULL || check_only_reg(list) == 1) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 3);

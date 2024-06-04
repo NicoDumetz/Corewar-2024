@@ -34,16 +34,34 @@ static void stock_moove(champ_t *champ, param_t *list, char *bin)
 
 static void execute_st(champ_t *champ, corewar_t *game, param_t *list)
 {
-    unsigned int value = champ->reg[list[0].value - 1];
+    int value = list[0].value - 1;
     int index = 0;
 
-    if (list[1].type == T_REG)
+    if (value > REG_NUMBER)
+        return;
+    value = champ->reg[list[0].value - 1];
+    if (list[1].type == T_REG) {
+        if (list[1].value - 1 > REG_NUMBER)
+            return;
         champ->reg[list[1].value - 1] = value;
-    else {
-        index = (champ->pc + list[1].value) % IDX_MOD;
+    } else {
+        index = (champ->pc + (short)list[1].value) % IDX_MOD;
         write_int_to_memory(value, game, index);
     }
     return;
+}
+
+static int check_var_st(param_t *list)
+{
+    if (list[0].type != T_REG) {
+        free(list);
+        return 1;
+    }
+    if (list[1].type == T_DIR) {
+        free(list);
+        return 1;
+    }
+    return 0;
 }
 
 void stock(champ_t *champ, corewar_t *game)
@@ -53,8 +71,9 @@ void stock(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
-    if (list == NULL) {
+    if (list == NULL || check_var_st(list) == 1) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 2);
