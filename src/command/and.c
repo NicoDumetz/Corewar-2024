@@ -36,6 +36,17 @@ static void execute_and(champ_t *champ, corewar_t *game, param_t *list)
     champ->carry = res == 0 ? 1 : 0;
 }
 
+int check_reg(param_t *list)
+{
+    if (list[0].type == T_REG && list[0].value - 1 > REG_NUMBER)
+        return 1;
+    if (list[1].type == T_REG && list[1].value - 1 > REG_NUMBER)
+        return 1;
+    if (list[2].value - 1 > REG_NUMBER)
+        return 1;
+    return 0;
+}
+
 void and_cor(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
@@ -43,12 +54,16 @@ void and_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
-    if (list == NULL) {
+    if (list == NULL || list[2].type != T_REG) {
         add_pc(champ, 1);
+        free(bin);
         return;
     }
     fill_value(champ, game, list, 3);
-    execute_and(champ, game, list);
+    if (check_reg(list) == 0)
+        execute_and(champ, game, list);
+    else
+        champ->carry = 0;
     and_moove(champ, list, bin);
     return;
 }

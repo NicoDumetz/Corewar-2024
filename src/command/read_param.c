@@ -145,6 +145,6 @@ int value_of_param(champ_t *champ, corewar_t *game, param_t list)
     if (list.type == T_DIR) {
         return list.value;
     }
-    index = (champ->pc + list.value) % IDX_MOD;
+    index = (champ->pc + ((short)list.value % IDX_MOD));
     return read_int_from_memory(game, index);
 }
