@@ -19,7 +19,6 @@ static void sub_moove(champ_t *champ, param_t *list, char *bin)
     for (int i = 0; list[i].type != 0; i++) {
         add += list[i].size;
     }
-    my_printf("sub %s\n", champ->name);
     add_pc(champ, add + 2);
     free(list);
     free(bin);
@@ -28,7 +27,7 @@ static void sub_moove(champ_t *champ, param_t *list, char *bin)
 
 static void execute_sub(champ_t *champ, param_t *list)
 {
-    int value = champ->reg[list[0].value] - champ->reg[list[1].value];
+    unsigned int value = champ->reg[list[0].value] - champ->reg[list[1].value];
 
     champ->reg[list[2].value] = value;
     champ->carry = value == 0 ? 1 : 0;

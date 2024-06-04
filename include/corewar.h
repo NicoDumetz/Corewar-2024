@@ -94,6 +94,6 @@ void lfork_cor(champ_t *champ, corewar_t *game);
 void aff(champ_t *champ, corewar_t *game);
 void manage_cycle_to_die(corewar_t *game);
 int pick_direct(int pc, corewar_t *game);
-int pick_indirect(int pc, corewar_t *game);
 void fill_value(champ_t *champ, corewar_t *game, param_t *list, int len);
+int value_of_param(champ_t *champ, corewar_t *game, param_t list);
 #endif

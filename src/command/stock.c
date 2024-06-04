@@ -34,7 +34,7 @@ static void stock_moove(champ_t *champ, param_t *list, char *bin)
 
 static void execute_st(champ_t *champ, corewar_t *game, param_t *list)
 {
-    int value = champ->reg[list[0].value - 1];
+    unsigned int value = champ->reg[list[0].value - 1];
     int index = 0;
 
     if (list[1].type == T_REG)

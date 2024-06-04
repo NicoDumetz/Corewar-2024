@@ -19,11 +19,21 @@ static void or_moove(champ_t *champ, param_t *list, char *bin)
     for (int i = 0; list[i].type != 0; i++) {
         add += list[i].size;
     }
-    my_printf("or %s\n", champ->name);
     add_pc(champ, add + 2);
     free(list);
     free(bin);
     return;
+}
+
+static void execute_or(champ_t *champ, corewar_t *game, param_t *list)
+{
+    int first = value_of_param(champ, game, list[0]);
+    int second = value_of_param(champ, game, list[1]);
+    int reg = list[1].value;
+    unsigned int res = first | second;
+
+    champ->reg[reg - 1] = res;
+    champ->carry = res == 0 ? 1 : 0;
 }
 
 void or_cor(champ_t *champ, corewar_t *game)
@@ -33,6 +43,8 @@ void or_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
+    fill_value(champ, game, list, 3);
+    execute_or(champ, game, list);
     or_moove(champ, list, bin);
     return;
 }

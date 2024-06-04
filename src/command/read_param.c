@@ -56,7 +56,7 @@ int pick_direct(int pc, corewar_t *game)
     return converter.value;
 }
 
-int pick_indirect(int pc, corewar_t *game)
+static int pick_indirect(int pc, corewar_t *game)
 {
     union intconverter converter;
     int address = pc + 1;
@@ -90,4 +90,17 @@ void fill_value(champ_t *champ, corewar_t *game, param_t *list, int len)
         pc += list[i].size;
     }
     return;
+}
+
+int value_of_param(champ_t *champ, corewar_t *game, param_t list)
+{
+    int index = 0;
+
+    if (list.type == T_REG)
+        return champ->reg[list.value - 1];
+    if (list.type == T_DIR) {
+        index = (champ->pc + list.value) % IDX_MOD;
+        return game->board[index];
+    }
+    return game->board[list.value];
 }

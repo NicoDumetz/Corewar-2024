@@ -29,7 +29,7 @@ static void execute_ld(champ_t *champ, corewar_t *game, param_t *list)
 {
     int reg = list[1].value;
     int index = 0;
-    int value;
+    unsigned int value;
 
     if (list[0].type == T_DIR)
         index = (champ->pc + list[0].value) % IDX_MOD;
