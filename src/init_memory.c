@@ -44,8 +44,8 @@ void init_memory(corewar_t *game)
         game->board[i] = 0;
     div = MEM_SIZE / game->len_hero + 1;
     for (; champ; champ = champ->next) {
-        champ->pos = (int)pos;
-        write_code_champ(game, champ->pos, champ);
+        champ->pc = (int)pos;
+        write_code_champ(game, champ->pc, champ);
         pos += div;
     }
 }

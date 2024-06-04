@@ -33,7 +33,9 @@ typedef struct champ_s {
     char *comment;
     char *code;
     char *all;
-    int pos;
+    int pc;
+    int index;
+    int reg[15];
     struct champ_s *next;
 } champ_t;
 
