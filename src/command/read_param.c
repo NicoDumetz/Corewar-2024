@@ -99,8 +99,8 @@ int value_of_param(champ_t *champ, corewar_t *game, param_t list)
     if (list.type == T_REG)
         return champ->reg[list.value - 1];
     if (list.type == T_DIR) {
-        index = (champ->pc + list.value) % IDX_MOD;
-        return game->board[index];
+        return list.value;
     }
-    return game->board[list.value];
+    index = (champ->pc + list.value) % IDX_MOD;
+    return read_int_from_memory(game, index);
 }
