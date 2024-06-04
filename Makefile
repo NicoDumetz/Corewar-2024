@@ -35,8 +35,7 @@ SRC = main.c \
 	  src/write_in_mem.c \
 	  src/check_dump.c \
 	  src/fetch_options.c \
-	  src/set_pc_champ.c
-	  src/check_args.c \
+	  src/set_pc_champ.c \
 	  src/insert_champ.c \
 	  src/check_var.c
 
@@ -46,14 +45,16 @@ CFLAGS += -Llib -lmy -Iinclude
 
 NAME = corewar
 
+LIB_NAME = lib/libmy.a
+
 all: $(NAME)
 
 CFLAGS += -Wall -Wextra -g
 
-required:
+$(LIB_NAME):
 	make -C lib/my
 
-$(NAME): required $(OBJ)
+$(NAME): $(LIB_NAME) $(OBJ)
 	gcc -o $(NAME) $(OBJ) $(CFLAGS)
 
 clean:
