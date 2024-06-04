@@ -12,27 +12,23 @@
 #include <sys/stat.h>
 
 
-static void aff_moove(champ_t *champ, param_t *list, char *bin)
+static void execute_aff(champ_t *champ, corewar_t *game)
 {
-    int add = 0;
+    int reg = game->board[champ->pc + 2];
 
-    for (int i = 0; list[i].type != 0; i++) {
-        add += list[i].size;
-    }
-    my_printf("aff %s\n", champ->name);
-    add_pc(champ, add + 2);
-    free(list);
-    free(bin);
-    return;
+    if (reg > 16)
+        return;
+    my_printf("%d\n", champ->reg[reg]);
 }
 
 void aff(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
     char *bin = dec_to_octet(game->board[pc], "01", 8);
-    param_t *list;
 
-    list = read_param(1, bin);
-    aff_moove(champ, list, bin);
+    if (my_strcmp(bin, "01000000") == 0)
+        execute_aff(champ, game);
+    add_pc(champ, 3);
+    free(bin);
     return;
 }
