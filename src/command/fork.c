@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 
 
-void copy_of_champ(champ_t *champ, corewar_t *game, champ_t *new)
+void copy_of_champ(champ_t *champ, champ_t *new)
 {
     new->name = my_strdup(champ->name);
     new->prog_size = champ->prog_size;
@@ -22,12 +22,12 @@ void copy_of_champ(champ_t *champ, corewar_t *game, champ_t *new)
     new->code = my_strdup(champ->code);
     for (int i = 1; i < REG_NUMBER; i++)
         new->reg[i] = 0;
-    champ->carry = 0;
-    champ->alive = 1;
-    champ->cycle_die = game->cycle_die;
-    champ->index = champ->index;
-    champ->reg[0] = champ->index;
-    champ->wait = -1;
+    new->carry = 0;
+    new->alive = 1;
+    new->cycle_die = champ->cycle_die;
+    new->index = champ->index;
+    new->reg[0] = champ->index;
+    new->wait = -1;
 }
 
 void fork_cor(champ_t *champ, corewar_t *game)
@@ -42,7 +42,7 @@ void fork_cor(champ_t *champ, corewar_t *game)
     converter.bytes[2] = 0;
     converter.bytes[3] = 0;
     value = converter.value;
-    copy_of_champ(champ, game, new);
+    copy_of_champ(champ, new);
     new->pc = champ->pc + (value % IDX_MOD);
     if (new->pc < 0) {
         new->pc += MEM_SIZE;

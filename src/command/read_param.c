@@ -59,9 +59,21 @@ void fill_value_except(champ_t *champ, corewar_t *game, param_t *list, int len)
     return;
 }
 
-param_t *read_param_except(int len, char *bin)
+static param_t *init_list(int len)
 {
     param_t *list = malloc(sizeof(param_t) * (len + 1));
+
+    for (int i = 0; i < len; i++) {
+        list[i].size = 0;
+        list[i].type = 0;
+        list[i].value = 0;
+    }
+    return list;
+}
+
+param_t *read_param_except(int len, char *bin)
+{
+    param_t *list = init_list(len);
     int ind = 0;
 
     for (int i = 0; i < len; i++) {
@@ -105,7 +117,7 @@ static int fill_types(param_t *list, int i, char *bin, int ind)
 
 param_t *read_param(int len, char *bin)
 {
-    param_t *list = malloc(sizeof(param_t) * (len + 1));
+    param_t *list = init_list(len);
     int ind = 0;
     int num = 0;
 

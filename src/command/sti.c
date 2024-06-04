@@ -39,7 +39,7 @@ void sti(champ_t *champ, corewar_t *game)
 {
     int pc = champ->pc + 1;
     char *bin = dec_to_octet(game->board[pc], "01", 8);
-    param_t *list;
+    param_t *list = NULL;
 
     list = read_param_except(3, bin);
     if (list == NULL || list[0].type != T_REG || list[2].type == T_IND) {

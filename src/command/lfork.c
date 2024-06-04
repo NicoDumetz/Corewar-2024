@@ -24,7 +24,7 @@ void lfork_cor(champ_t *champ, corewar_t *game)
     converter.bytes[2] = 0;
     converter.bytes[3] = 0;
     value = converter.value;
-    copy_of_champ(champ, game, new);
+    copy_of_champ(champ, new);
     new->pc = champ->pc + value;
     if (new->pc < 0) {
         new->pc += MEM_SIZE;
