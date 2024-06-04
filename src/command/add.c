@@ -41,6 +41,10 @@ void add(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value(champ, game, list, 3);
     execute_add(champ, list);
     add_moove(champ, list, bin);

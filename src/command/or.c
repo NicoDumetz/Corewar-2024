@@ -43,6 +43,10 @@ void or_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(3, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value(champ, game, list, 3);
     execute_or(champ, game, list);
     or_moove(champ, list, bin);

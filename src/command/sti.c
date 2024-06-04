@@ -30,7 +30,7 @@ static void execute_sti(champ_t *champ, corewar_t *game, param_t *list)
     int reg = list[0].value;
     int second = value_of_param(champ, game, list[1]);
     int third = value_of_param(champ, game, list[2]);
-    int pc = third + second;
+    int pc = champ->pc + third + second;
 
     write_int_to_memory(champ->reg[reg - 1], game, pc);
 }
@@ -42,6 +42,10 @@ void sti(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param_except(3, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value_except(champ, game, list, 3);
     execute_sti(champ, game, list);
     sti_moove(champ, list, bin);

@@ -83,27 +83,39 @@ param_t *read_param_except(int len, char *bin)
     return list;
 }
 
+static int fill_types(param_t *list, int i, char *bin, int ind)
+{
+    if (bin[ind] == '1' && bin[ind + 1] == '0') {
+        list[i].type = T_DIR;
+        list[i].size = 4;
+        return 1;
+    }
+    if (bin[ind] == '1' && bin[ind + 1] == '1') {
+        list[i].type = T_IND;
+        list[i].size = 2;
+        return 1;
+    }
+    if (bin[ind] == '0' && bin[ind + 1] == '1') {
+        list[i].type = T_REG;
+        list[i].size = 1;
+        return 1;
+    }
+    return 0;
+}
+
 param_t *read_param(int len, char *bin)
 {
     param_t *list = malloc(sizeof(param_t) * (len + 1));
     int ind = 0;
+    int num = 0;
 
     for (int i = 0; i < len; i++) {
-        if (bin[ind] == '1' && bin[ind + 1] == '0') {
-            list[i].type = T_DIR;
-            list[i].size = 4;
-        }
-        if (bin[ind] == '1' && bin[ind + 1] == '1') {
-            list[i].type = T_IND;
-            list[i].size = 2;
-        }
-        if (bin[ind] == '0' && bin[ind + 1] == '1') {
-            list[i].type = T_REG;
-            list[i].size = 1;
-        }
+        num += fill_types(list, i, bin, ind);
         ind += 2;
     }
     list[len].type = 0;
+    if (num != len)
+        return NULL;
     return list;
 }
 

@@ -53,6 +53,10 @@ void stock(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value(champ, game, list, 2);
     execute_st(champ, game, list);
     stock_moove(champ, list, bin);

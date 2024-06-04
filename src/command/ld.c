@@ -47,6 +47,10 @@ void ld_cor(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param(2, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value(champ, game, list, 2);
     execute_ld(champ, game, list);
     ld_moove(champ, list, bin);

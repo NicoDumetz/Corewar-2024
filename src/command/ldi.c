@@ -44,6 +44,10 @@ void ldi(champ_t *champ, corewar_t *game)
     param_t *list;
 
     list = read_param_except(3, bin);
+    if (list == NULL) {
+        add_pc(champ, 1);
+        return;
+    }
     fill_value_except(champ, game, list, 3);
     execute_ldi(champ, game, list);
     ldi_moove(champ, list, bin);
