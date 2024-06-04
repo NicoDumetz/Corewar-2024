@@ -58,19 +58,23 @@ static int check_magic(char *str)
 {
     if (str[0] == 0 && str[1] == -22 && str[2] == -125 && str[3] == -13)
         return 0;
+    write(2, "Wrong files, magic are not correct.\n",
+    my_strlen("Wrong files, magic are not correct.\n"));
     return 84;
 }
 
-static void init_champ_game(champ_t *champ)
+static void init_champ_game(champ_t *champ, int k)
 {
-    for (int i = 0; i < REG_NUMBER; i++)
+    for (int i = 1; i < REG_NUMBER; i++)
         champ->reg[i] = 0;
     champ->carry = 0;
     champ->alive = 1;
     champ->cycle_die = 0;
+    champ->index = k;
+    champ->reg[0] = k;
 }
 
-int add_champs(char *filename, corewar_t *game)
+int add_champs(char *filename, corewar_t *game, int i)
 {
     char *str = read_file(filename);
     champ_t *champ = malloc(sizeof(champ_t));
@@ -88,7 +92,7 @@ int add_champs(char *filename, corewar_t *game)
     champ->comment = str + 4 + PROG_NAME_LENGTH + 8;
     champ->all = str;
     champ->code = pick_bin(str, champ->prog_size);
-    init_champ_game(champ);
+    init_champ_game(champ, i);
     champ->next = game->list;
     game->list = champ;
     return 0;
@@ -100,7 +104,7 @@ int init_champ(int ac, char **av, corewar_t *game)
         return 84;
     game->list = NULL;
     for (int i = 1; i < ac; i++) {
-        if (add_champs(av[i], game) == 84)
+        if (add_champs(av[i], game, i) == 84)
             return 84;
     }
     return 0;

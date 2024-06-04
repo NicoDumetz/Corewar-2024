@@ -7,7 +7,6 @@
 
 #include "bonus.h"
 
-
 void manage_img(void)
 {
     return;

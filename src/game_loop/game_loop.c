@@ -25,8 +25,12 @@ void add_pc(champ_t *champ, int nbr)
 char *which_command(champ_t *champ, corewar_t *game)
 {
     for (int i = 0; op_tab[i].code; i++) {
-        if (game->board[champ->pc] == op_tab[i].code)
+        if (game->board[champ->pc] == op_tab[i].code && champ->wait == 0)
             return op_tab[i].mnemonique;
+        if (game->board[champ->pc] == op_tab[i].code && champ->wait <= -1) {
+            champ->wait = op_tab[i].nbr_cycles - 1;
+            return NULL;
+        }
     }
     return NULL;
 }
@@ -35,14 +39,15 @@ void execute_champion(champ_t *champ, corewar_t *game)
 {
     char *command = NULL;
 
+    champ->wait--;
     if (champ->alive == 0)
         return;
     command = which_command(champ, game);
     if (command == NULL) {
-        add_pc(champ, 1);
+        if (champ->wait <= -1)
+            add_pc(champ, 1);
         return;
     }
-    my_printf("%s %s\n", command, champ->name);
     add_pc(champ, 1);
     return;
 }
@@ -51,7 +56,8 @@ int game_loop(corewar_t *game)
 {
     champ_t *champ = NULL;
 
-    while (how_many_are_alive(game) > 1) {
+    //while (how_many_are_alive(game) > 1) { en attendant le dump
+    for (int i = 0; i < 50; i++) {
         champ = game->list;
         for (; champ; champ = champ->next) {
             execute_champion(champ, game);

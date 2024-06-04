@@ -73,7 +73,6 @@ void game_loop(void)
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_PROJECTION);
-
         glLoadIdentity();
         gluPerspective(60.0f, 1900.0f / 1000.0f, 0.1f, 1000.0f);
         glMatrixMode(GL_MODELVIEW);

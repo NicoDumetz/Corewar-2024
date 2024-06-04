@@ -29,17 +29,18 @@ union intconverter {
 
 typedef struct champ_s {
     char *name;
-    char *filename;
-    int alive;
-    int prog_size;
     char *comment;
+    char *filename;
     char *code;
     char *all;
+    int prog_size;
+    int alive;
     int pc;
     int index;
     int reg[REG_NUMBER];
     int carry;
     int cycle_die;
+    int wait;
     struct champ_s *next;
 } champ_t;
 
