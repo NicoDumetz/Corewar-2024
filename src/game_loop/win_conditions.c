@@ -37,7 +37,7 @@ void display_winner(corewar_t *game)
     for (; champ; champ = champ->next) {
         if (champ->alive == 1) {
             my_printf("The player %d (%s) has won.\n",
-            champ->index, champ->name);
+            champ->index + 1, champ->name);
             break;
         }
     }
